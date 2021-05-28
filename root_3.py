@@ -47,7 +47,7 @@ frameCE.place(x=400, y=450)
 '''_____________Information in frameH_____________'''
 
 
-img1 = PhotoImage(file='root1.gif')
+img1 = PhotoImage(file='media/root1.gif')
 img = Label(frameH, image=img1, width=391, height=245)
 img.place(x=-5, y=-5)
 
@@ -199,7 +199,7 @@ btnCE.place(x=95, y=150)
 
 def btn_menu():
 
-    os.startfile(r'root0.py')
+    os.startfile(r'main.py')
     root1.quit()
 
 
@@ -222,9 +222,6 @@ def gen_count():
 
     vg1 = r.randint(0, 359)
     vm1 = r.randint(0, 59)
-
-    print(hg1, hm1)
-    print(vg1, vm1)
 
     createCanvas(hg1, hm1, vm1, vg1)
 

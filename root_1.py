@@ -46,7 +46,7 @@ frameCE.place(x=400, y=450)
 '''_____________Information in frameH_____________'''
 
 
-img1 = PhotoImage(file='root1.gif')
+img1 = PhotoImage(file='media/root1.gif')
 img = Label(frameH, image=img1, width=391, height=245)
 img.place(x=-5, y=-5)
 
@@ -100,7 +100,7 @@ hg.place(x=85+40, y=100)
 hm = Spinbox(frameCE, width=7, from_=0, to=59.0)
 hm.place(x=85*2+40, y=100)
 
-vg = Spinbox(frameCE, width=7, from_=-359, to=359)
+vg = Spinbox(frameCE, width=7, from_=-55, to=69)
 vg.place(x=(85+40+400), y=100)
 vm = Spinbox(frameCE, width=7, from_=0, to=59.0)
 vm.place(x=85*2+40+400, y=100)
@@ -109,7 +109,7 @@ vm.place(x=85*2+40+400, y=100)
 '''_____________import Img____________'''
 
 
-img_C1 = PhotoImage(file='2t5k.gif')
+img_C1 = PhotoImage(file='media/2t5k.gif')
 
 imgC1 = Label(frameC, image=img_C1, width=396, height=400)
 imgC1.place(x=198, y=-2)
@@ -169,7 +169,7 @@ btnCE.place(x=95, y=150)
 
 def btn_menu():
 
-    os.startfile(r'root0.py')
+    os.startfile(r'main.py')
     root1.quit()
 
 
@@ -190,11 +190,8 @@ def gen_count():
     hg1 = r.randint(0, 359)
     hm1 = round(r.uniform(0, 59), 1)
 
-    vg1 = r.randint(-359, 359)
+    vg1 = r.randint(-55, 69)
     vm1 = round(r.uniform(0, 59), 1)
-
-    print(hg1, hm1)
-    print(vg1, vm1)
 
     btn_CE(hg1, hm1, vm1, vg1)
 
