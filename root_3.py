@@ -57,19 +57,19 @@ def label(frame, textL, xL, yL):
     nameL.place(x=xL, y=yL)
 
 
-h1 = 'СКО измерения гор. угла одним приемом =30"'
-h2 = 'СКО измерения вертикального угла =30"'
-h3 = 'Диапазон измерения верт.углов  +60..-55 град.'
-h4 = 'отсчетное устройство - шкаловая система'
-h5 = 'Увеличение трубы =20X'
-h6 = 'Диапазон рабочих температур  -40..+50 С '
-h7 = 'Габаритные размеры 140х130х230 мм'
-h8 = 'Масса теодолита =2.3 кг'
+h1 = 'СКО измерения гор. угла одним приемом  30"'
+h2 = 'СКО измерения вертикального угла  30"'
+h3 = 'Цена деления уровня при алидаде горизонтального круга  45`'
+h4 = 'Поле зрения зрительной трубы  2 град.'
+h5 = 'Увеличение трубы  20X'
+h6 = 'Коэффициент нитяного дальномера  100'
+h7 = 'Цена деления лимба  10`'
+h8 = 'Погрешность отсчитывания  0.5`-1`'
 
 labelT = Label(frameH, text='Т30', bg='#333', fg='#fff', font='arial 16')
 labelT.place(x=10, y=250)
 
-label(frameH, "Цена деления лимба =60'", 10, 350)
+label(frameH, "Цена деления лимба = 10'", 10, 350)
 label(frameH, h1, 10, 450)
 label(frameH, h2, 10, 470)
 label(frameH, h3, 10, 490)
@@ -93,12 +93,12 @@ label(frameCE, 'Ввод отсчетов', 360, 30)
 
 hg = Spinbox(frameCE, width=7, from_=0, to=359)
 hg.place(x=85+40, y=100)
-hm = Spinbox(frameCE, width=7, from_=0, to=59.0)
+hm = Spinbox(frameCE, width=7, from_=0, to=59)
 hm.place(x=85*2+40, y=100)
 
-vg = Spinbox(frameCE, width=7, from_=-359, to=359)
+vg = Spinbox(frameCE, width=7, from_=0, to=359)
 vg.place(x=(85+40+400), y=100)
-vm = Spinbox(frameCE, width=7, from_=0, to=59.0)
+vm = Spinbox(frameCE, width=7, from_=0, to=59)
 vm.place(x=85*2+40+400, y=100)
 
 
@@ -131,6 +131,8 @@ def createCanvas(hg, hm, vm, vg):
                             380/2+380/32, 380*1/4,
                             (cos(asin(0.35)))*380, 380*1/4], fill="white")
     canvasFrame.create_line(380/2, 380*2/6, 380/2, 380*4/6, fill="white")
+    canvasFrame.create_text(380/2, 380*1/4-10, text="В", fill="white")
+    canvasFrame.create_text(380/2, 380*3/4+10, text="Г", fill="white")
     
     # построение отсчетных штрихов
     for i in [0, 3, 6, 9, 12, 16]:
@@ -155,16 +157,26 @@ def createCanvas(hg, hm, vm, vg):
                                 380/2+380/16*hm/10+380/16*i, 380/2+1+380/7/2, fill="white")
     
     # построение значений углов
-    canvasFrame.create_text(380/2+380/16*vm/10-380/16*0, 380/2-1-380/5, text=str(360-vg+1), fill="white")
-    canvasFrame.create_text(380/2+380/16*vm/10-380/16*-6, 380/2-1-380/5, text=str(360-vg), fill="white")
-    canvasFrame.create_text(380/2+380/16*vm/10-380/16*-12, 380/2-1-380/5, text=str(360-vg+3), fill="white")
-    canvasFrame.create_text(380/2+380/16*vm/10-380/16*6, 380/2-1-380/5, text=str(360-vg), fill="white")
-    canvasFrame.create_text(380/2+380/16*vm/10-380/16*12, 380/2-1-380/5, text=str(360-vg-1), fill="white")
-    canvasFrame.create_text(380/2+380/16*hm/10-380/16*0, 380/2+1+380/5, text=str(360-hg+1), fill="white")
-    canvasFrame.create_text(380/2+380/16*hm/10-380/16*-6, 380/2+1+380/5, text=str(360-hg+2), fill="white")
-    canvasFrame.create_text(380/2+380/16*hm/10-380/16*-12, 380/2+1+380/5, text=str(360-hg+3), fill="white")
-    canvasFrame.create_text(380/2+380/16*hm/10-380/16*6, 380/2+1+380/5, text=str(360-hg), fill="white")
-    canvasFrame.create_text(380/2+380/16*hm/10-380/16*12, 380/2+1+380/5, text=str(360-hg-1), fill="white")
+    canvasFrame.create_text(380/2+380/16*vm/10-380/16*0, 380/2-1-380/5,
+                            text=str(360-vg+1), fill="white", font=14)
+    canvasFrame.create_text(380/2+380/16*vm/10-380/16*-6, 380/2-1-380/5,
+                            text=str(360-vg), fill="white", font=14)
+    canvasFrame.create_text(380/2+380/16*vm/10-380/16*-12, 380/2-1-380/5,
+                            text=str(360-vg+3), fill="white", font=14)
+    canvasFrame.create_text(380/2+380/16*vm/10-380/16*6, 380/2-1-380/5,
+                            text=str(360-vg), fill="white", font=14)
+    canvasFrame.create_text(380/2+380/16*vm/10-380/16*12, 380/2-1-380/5,
+                            text=str(360-vg-1), fill="white", font=14)
+    canvasFrame.create_text(380/2+380/16*hm/10-380/16*0, 380/2+1+380/5,
+                            text=str(360-hg+1), fill="white", font=14)
+    canvasFrame.create_text(380/2+380/16*hm/10-380/16*-6, 380/2+1+380/5,
+                            text=str(360-hg+2), fill="white", font=14)
+    canvasFrame.create_text(380/2+380/16*hm/10-380/16*-12, 380/2+1+380/5,
+                            text=str(360-hg+3), fill="white", font=14)
+    canvasFrame.create_text(380/2+380/16*hm/10-380/16*6, 380/2+1+380/5,
+                            text=str(360-hg), fill="white", font=14)
+    canvasFrame.create_text(380/2+380/16*hm/10-380/16*12, 380/2+1+380/5,
+                            text=str(360-hg-1), fill="white", font=14)
 
 
 createCanvas(10, 42, 28, 24)
@@ -208,7 +220,7 @@ def gen_count():
     hg1 = r.randint(0, 359)
     hm1 = r.randint(0, 59)
 
-    vg1 = r.randint(-359, 359)
+    vg1 = r.randint(0, 359)
     vm1 = r.randint(0, 59)
 
     print(hg1, hm1)
