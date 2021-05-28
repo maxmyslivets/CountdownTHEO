@@ -10,6 +10,7 @@
 from tkinter import *
 from tkinter import ttk
 import os
+from math import pi, cos, sin, radians, acos, asin
 
 
 root1 = Tk()
@@ -65,7 +66,7 @@ h6 = 'Диапазон рабочих температур  -40..+50 С '
 h7 = 'Габаритные размеры 140х130х230 мм'
 h8 = 'Масса теодолита =2.3 кг'
 
-labelT = Label(frameH, text='2Т30', bg='#333', fg='#fff', font='arial 16')
+labelT = Label(frameH, text='Т30', bg='#333', fg='#fff', font='arial 16')
 labelT.place(x=10, y=250)
 
 label(frameH, "Цена деления лимба =60'", 10, 350)
@@ -101,60 +102,82 @@ vm = Spinbox(frameCE, width=7, from_=0, to=59.0)
 vm.place(x=85*2+40+400, y=100)
 
 
-'''_____________import Img____________'''
+'''___________Canvas create____________'''
+
+def createCanvas(hg, hm, vm, vg):
+    hg = 360-hg
+    hm = 60-hm
+    vm = 60-vm
+    vg = 360-vg
+    # обозначаем размер и свойства виджета Canvas, и положение
+    canvasFrame = Canvas(frameC, width=381, height=381,
+                        bg="#333", highlightthickness=0)
+    canvasFrame.place(x=219, y=19)
+    # строим поле зрения отсчетного устройства
+    canvasFrame.create_oval(0, 0, 380, 380, outline="white")
+    # строим внутренние элементы
+    canvasFrame.create_line(0, 380/2-1, 380, 380/2-1, fill="white")
+    canvasFrame.create_line(0, 380/2+1, 380, 380/2+1, fill="white")
+    canvasFrame.create_line([(1-cos(asin(0.35)))*380, 380*3/4,
+                            380/2-380/32, 380*3/4,
+                            380/2-380/32, 380*3/4+380/16,
+                            380/2+380/32, 380*3/4+380/16,
+                            380/2+380/32, 380*3/4,
+                            (cos(asin(0.35)))*380, 380*3/4], fill="white")
+    canvasFrame.create_line([(1-cos(asin(0.35)))*380, 380*1/4,
+                            380/2-380/32, 380*1/4,
+                            380/2-380/32, 380*1/4-380/16,
+                            380/2+380/32, 380*1/4-380/16,
+                            380/2+380/32, 380*1/4,
+                            (cos(asin(0.35)))*380, 380*1/4], fill="white")
+    canvasFrame.create_line(380/2, 380*2/6, 380/2, 380*4/6, fill="white")
+    
+    # построение отсчетных штрихов
+    for i in [0, 3, 6, 9, 12, 16]:
+        canvasFrame.create_line(380/2+380/16*vm/10-380/16*i, 380/2-1,
+                                380/2+380/16*vm/10-380/16*i, 380/2-1-380/7, fill="white")
+        canvasFrame.create_line(380/2+380/16*vm/10+380/16*i, 380/2-1,
+                                380/2+380/16*vm/10+380/16*i, 380/2-1-380/7, fill="white")
+    for i in [1, 2, 4, 5, 7, 8, 10, 11, 13, 14]:
+        canvasFrame.create_line(380/2+380/16*vm/10-380/16*i, 380/2-1,
+                                380/2+380/16*vm/10-380/16*i, 380/2-1-380/7/2, fill="white")
+        canvasFrame.create_line(380/2+380/16*vm/10+380/16*i, 380/2-1,
+                                380/2+380/16*vm/10+380/16*i, 380/2-1-380/7/2, fill="white")
+    for i in [0, 3, 6, 9, 12, 16]:
+        canvasFrame.create_line(380/2+380/16*hm/10-380/16*i, 380/2+1,
+                                380/2+380/16*hm/10-380/16*i, 380/2+1+380/7, fill="white")
+        canvasFrame.create_line(380/2+380/16*hm/10+380/16*i, 380/2+1,
+                                380/2+380/16*hm/10+380/16*i, 380/2+1+380/7, fill="white")
+    for i in [1, 2, 4, 5, 7, 8, 10, 11, 13, 14]:
+        canvasFrame.create_line(380/2+380/16*hm/10-380/16*i, 380/2+1,
+                                380/2+380/16*hm/10-380/16*i, 380/2+1+380/7/2, fill="white")
+        canvasFrame.create_line(380/2+380/16*hm/10+380/16*i, 380/2+1,
+                                380/2+380/16*hm/10+380/16*i, 380/2+1+380/7/2, fill="white")
+    
+    # построение значений углов
+    canvasFrame.create_text(380/2+380/16*vm/10-380/16*0, 380/2-1-380/5, text=str(360-vg+1), fill="white")
+    canvasFrame.create_text(380/2+380/16*vm/10-380/16*-6, 380/2-1-380/5, text=str(360-vg), fill="white")
+    canvasFrame.create_text(380/2+380/16*vm/10-380/16*-12, 380/2-1-380/5, text=str(360-vg+3), fill="white")
+    canvasFrame.create_text(380/2+380/16*vm/10-380/16*6, 380/2-1-380/5, text=str(360-vg), fill="white")
+    canvasFrame.create_text(380/2+380/16*vm/10-380/16*12, 380/2-1-380/5, text=str(360-vg-1), fill="white")
+    canvasFrame.create_text(380/2+380/16*hm/10-380/16*0, 380/2+1+380/5, text=str(360-hg+1), fill="white")
+    canvasFrame.create_text(380/2+380/16*hm/10-380/16*-6, 380/2+1+380/5, text=str(360-hg+2), fill="white")
+    canvasFrame.create_text(380/2+380/16*hm/10-380/16*-12, 380/2+1+380/5, text=str(360-hg+3), fill="white")
+    canvasFrame.create_text(380/2+380/16*hm/10-380/16*6, 380/2+1+380/5, text=str(360-hg), fill="white")
+    canvasFrame.create_text(380/2+380/16*hm/10-380/16*12, 380/2+1+380/5, text=str(360-hg-1), fill="white")
 
 
-img_C1 = PhotoImage(file='2т30.gif')
-
-imgC1 = Label(frameC, image=img_C1, width=396, height=400)
-imgC1.place(x=198, y=-2)
-
-
-'''_____________def btn_CE_____________'''
-
-
-def btn_CE(hg, hm, vm, vg):
-
-    imgC1 = Label(frameC, image=img_C1, width=396, height=400)
-    imgC1.place(x=198, y=-2)
-
-    canvasCh = Canvas(frameC, width=1, height=30, bg='#333')
-    labelCh = Label(frameC, text=str(hg), bg='#333', fg='#fff', font='arial 16')
-
-    canvasCv = Canvas(frameC, width=1, height=30, bg='#333')
-    labelCv = Label(frameC, text=str(vg), bg='#333', fg='#fff', font='arial 16')
-
-    xx = 336
-    d = 1.95
-
-    xCh = xx+d*hm
-    canvasCh.place(x=xCh, y=207)
-
-    labelCh.place(x=xCh - 7, y=250)
-
-    if vg > 0 or vg == 0:
-
-        xCv = xx + d * vm
-        canvasCv.place(x=xCv, y=128)
-
-        labelCv.place(x=xCv - 7, y=95)
-
-    elif vg < 0:
-
-        xCv = (xx + d * 60) - d * vm
-        canvasCv.place(x=xCv, y=128)
-
-        labelCv.place(x=xCv - 7, y=95)
+createCanvas(10, 42, 28, 24)
 
 
 '''_____________Button CE_____________'''
 
 
 btnCE = ttk.Button(frameCE, text='Показать отсчет', width=100)
-btnCE.bind('<Button-1>', lambda event: btn_CE(int(hg.get()),
-                                              float(hm.get()),
-                                              float(vm.get()),
-                                              int(vg.get())))
+btnCE.bind('<Button-1>', lambda event: createCanvas(int(hg.get()),
+                                                    float(hm.get()),
+                                                    float(vm.get()),
+                                                    int(vg.get())))
 
 btnCE.place(x=95, y=150)
 
@@ -191,7 +214,7 @@ def gen_count():
     print(hg1, hm1)
     print(vg1, vm1)
 
-    btn_CE(hg1, hm1, vm1, vg1)
+    createCanvas(hg1, hm1, vm1, vg1)
 
 
 def gen_prov(hg, hm, vg, vm):
