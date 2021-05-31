@@ -70,7 +70,7 @@ h11 = 'Масса теодолита =3,7 кг'
 labelT = Label(frameH, text='2Т5К', bg='#333', fg='#fff', font='arial 16')
 labelT.place(x=10, y=250)
 
-label(frameH, "Цена деления лимба =1'", 10, 350)
+label(frameH, "Цена деления лимба =1 град.", 10, 350)
 label(frameH, h1, 10, 450)
 label(frameH, h2, 10, 470)
 label(frameH, h3, 10, 490)
